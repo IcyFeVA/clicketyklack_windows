@@ -39,6 +39,7 @@ dependencies:
   keyboard_event: ^0.3.4
   system_tray: ^2.0.2
   bitsdojo_window: ^0.1.5
+  get_storage: ^2.1.1
 
 dev_dependencies:
   flutter_test:

@@ -2,9 +2,11 @@ import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/material.dart' hide MenuItem;
 import 'setup_klack.dart';
 import 'init_system_tray.dart';
+import 'package:get_storage/get_storage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await GetStorage.init();
   runApp(
     const MyApp(),
   );
@@ -28,22 +30,28 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String _soundPack = "klack";
+  final store = GetStorage();
+  late String? _soundPack = store.read('soundPack');
 
-  void setSoundPack(String soundPack) {
+  void _setSoundPack(String soundPack) {
     setState(() {
       _soundPack = soundPack;
     });
+
     setupKlack(_soundPack);
+
+    store.write('soundPack', _soundPack);
   }
 
   @override
   void initState() {
     super.initState();
 
-    initSystemTray(setSoundPack);
+    initSystemTray(_soundPack, _setSoundPack);
 
-    setupKlack(_soundPack);
+    setupKlack(_soundPack ?? 'klack');
+
+    print(_soundPack);
   }
 
   @override

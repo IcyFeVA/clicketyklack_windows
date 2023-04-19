@@ -12,7 +12,8 @@ String getImagePath(String imageName) {
   return Platform.isWindows ? 'assets/$imageName.bmp' : 'assets/$imageName.png';
 }
 
-Future<void> initSystemTray(_setSoundPack) async {
+Future<void> initSystemTray(_soundPack, _setSoundPack) async {
+  final soundPack = _soundPack;
   final setSoundPack = _setSoundPack;
 
   String path =
@@ -35,7 +36,7 @@ Future<void> initSystemTray(_setSoundPack) async {
         MenuItemCheckbox(
           label: 'Theme 1',
           name: 'theme1',
-          checked: true,
+          checked: soundPack == 'klack',
           onClicked: (menuItem) async {
             setSoundPack('klack');
 
@@ -51,7 +52,7 @@ Future<void> initSystemTray(_setSoundPack) async {
         MenuItemCheckbox(
           label: 'Theme 2',
           name: 'theme2',
-          checked: false,
+          checked: soundPack == 'cream',
           onClicked: (menuItem) async {
             setSoundPack('cream');
 
