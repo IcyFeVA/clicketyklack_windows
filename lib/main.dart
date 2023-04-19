@@ -28,13 +28,22 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  String _soundPack = "klack";
+
+  void setSoundPack(String soundPack) {
+    setState(() {
+      _soundPack = soundPack;
+    });
+    setupKlack(_soundPack);
+  }
+
   @override
   void initState() {
     super.initState();
 
-    initSystemTray();
+    initSystemTray(setSoundPack);
 
-    setupKlack();
+    setupKlack(_soundPack);
   }
 
   @override

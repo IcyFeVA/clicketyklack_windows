@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:flutter/material.dart';
 import 'package:system_tray/system_tray.dart';
+import 'package:flutter/material.dart';
 
 String getTrayImagePath(String imageName) {
   return Platform.isWindows ? 'assets/$imageName.ico' : 'assets/$imageName.png';
@@ -10,7 +12,9 @@ String getImagePath(String imageName) {
   return Platform.isWindows ? 'assets/$imageName.bmp' : 'assets/$imageName.png';
 }
 
-Future<void> initSystemTray() async {
+Future<void> initSystemTray(_setSoundPack) async {
+  final setSoundPack = _setSoundPack;
+
   String path =
       Platform.isWindows ? 'assets/app_icon.ico' : 'assets/app_icon.png';
 
@@ -33,6 +37,8 @@ Future<void> initSystemTray() async {
           name: 'theme1',
           checked: true,
           onClicked: (menuItem) async {
+            setSoundPack('klack');
+
             MenuItemCheckbox? theme1 =
                 menu.findItemByName<MenuItemCheckbox>("theme1");
             await theme1?.setCheck(true);
@@ -47,6 +53,8 @@ Future<void> initSystemTray() async {
           name: 'theme2',
           checked: false,
           onClicked: (menuItem) async {
+            setSoundPack('cream');
+
             MenuItemCheckbox? theme1 =
                 menu.findItemByName<MenuItemCheckbox>("theme1");
             await theme1?.setCheck(false);
