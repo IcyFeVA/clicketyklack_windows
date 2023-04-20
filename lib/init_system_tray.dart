@@ -12,9 +12,12 @@ String getImagePath(String imageName) {
   return Platform.isWindows ? 'assets/$imageName.bmp' : 'assets/$imageName.png';
 }
 
-Future<void> initSystemTray(_soundPack, _setSoundPack) async {
+Future<void> initSystemTray(
+    _soundPack, _setSoundPack, _enabled, _setEnabled) async {
   final soundPack = _soundPack;
   final setSoundPack = _setSoundPack;
+  final enabled = _enabled;
+  final setEnabled = _setEnabled;
 
   String path =
       Platform.isWindows ? 'assets/app_icon.ico' : 'assets/app_icon.png';
@@ -69,13 +72,15 @@ Future<void> initSystemTray(_soundPack, _setSoundPack) async {
     ),
     MenuSeparator(),
     MenuItemCheckbox(
-      label: 'Disable',
-      name: 'disable',
-      checked: false,
+      label: 'Play Sounds',
+      name: 'enabled',
+      checked: enabled,
       onClicked: (menuItem) async {
-        MenuItemCheckbox? disable =
-            menu.findItemByName<MenuItemCheckbox>("disable");
-        await disable?.setCheck(!disable.checked);
+        MenuItemCheckbox? enabled =
+            menu.findItemByName<MenuItemCheckbox>("enabled");
+        await enabled?.setCheck(!enabled.checked);
+
+        setEnabled(enabled?.checked);
       },
     ),
     MenuItemLabel(label: 'Exit', onClicked: (menuItem) => appWindow.close()),

@@ -18,7 +18,6 @@ void main() async {
     win.size = initialSize;
     win.alignment = Alignment.center;
     win.title = "ClicketyKlack";
-    //win.show();
   });
 }
 
@@ -32,26 +31,36 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final store = GetStorage();
   late String? _soundPack = store.read('soundPack');
+  late bool? _enabled = store.read('enabled');
 
   void _setSoundPack(String soundPack) {
     setState(() {
       _soundPack = soundPack;
     });
 
-    setupKlack(_soundPack);
+    setupKlack(_soundPack, _enabled);
 
     store.write('soundPack', _soundPack);
+  }
+
+  void _setEnabled(bool enabled) {
+    setState(() {
+      _enabled = enabled;
+    });
+
+    setupKlack(_soundPack, _enabled);
+
+    store.write('enabled', _enabled);
   }
 
   @override
   void initState() {
     super.initState();
 
-    initSystemTray(_soundPack, _setSoundPack);
+    initSystemTray(
+        _soundPack ?? 'klack', _setSoundPack, _enabled ?? true, _setEnabled);
 
-    setupKlack(_soundPack ?? 'klack');
-
-    print(_soundPack);
+    setupKlack(_soundPack ?? 'klack', _enabled ?? true);
   }
 
   @override
