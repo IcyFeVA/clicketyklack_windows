@@ -2,7 +2,7 @@ import 'dart:math';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:keyboard_event/keyboard_event.dart';
 
-late KeyboardEvent keyboardEvent;
+late KeyboardEvent keyboardEvent = KeyboardEvent();
 List<int> keysPressed = [];
 List<int> assignedKeySounds = [];
 int playersIndex = 0;
@@ -49,7 +49,7 @@ void setupKlack(soundPack, enabled) {
       assignedKeySounds.add(index);
     }
 
-    keyboardEvent = KeyboardEvent();
+    keyboardEvent.cancelListening();
 
     keyboardEvent.startListening((keyEvent) {
       if (keyEvent.isKeyDown) {
@@ -60,6 +60,7 @@ void setupKlack(soundPack, enabled) {
         playersIndex = playersIndex < 9 ? playersIndex += 1 : 0;
 
         keysPressed.add(keyEvent.scanCode);
+        print(keyEvent.scanCode);
 
         final AudioPlayer player = players[playersIndex];
         player.play(AssetSource(
@@ -67,6 +68,7 @@ void setupKlack(soundPack, enabled) {
       }
       if (keyEvent.isKeyUP) {
         keysPressed.remove(keyEvent.scanCode);
+        print(keyEvent.scanCode);
 
         final AudioPlayer player = players[playersIndex];
         player.play(AssetSource(

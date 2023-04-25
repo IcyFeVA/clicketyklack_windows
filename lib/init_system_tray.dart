@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:flutter/material.dart';
 import 'package:system_tray/system_tray.dart';
-import 'package:flutter/material.dart';
 
 String getTrayImagePath(String imageName) {
   return Platform.isWindows ? 'assets/$imageName.ico' : 'assets/$imageName.png';
@@ -90,9 +88,11 @@ Future<void> initSystemTray(
 
   systemTray.registerSystemTrayEventHandler((eventName) {
     if (eventName == kSystemTrayEventClick) {
-      Platform.isWindows ? appWindow.show() : systemTray.popUpContextMenu();
+      //Platform.isWindows ? appWindow.show() : systemTray.popUpContextMenu();
+      systemTray.popUpContextMenu();
     } else if (eventName == kSystemTrayEventRightClick) {
-      Platform.isWindows ? systemTray.popUpContextMenu() : appWindow.show();
+      //Platform.isWindows ? systemTray.popUpContextMenu() : appWindow.show();
+      systemTray.popUpContextMenu();
     }
   });
 }
