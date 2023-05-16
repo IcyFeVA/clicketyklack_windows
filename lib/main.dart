@@ -1,12 +1,25 @@
+import 'dart:io';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/material.dart' hide MenuItem;
 import 'setup_klack.dart';
 import 'init_system_tray.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:launch_at_startup/launch_at_startup.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await GetStorage.init();
+
+  PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
+  launchAtStartup.setup(
+    appName: packageInfo.appName,
+    appPath: Platform.resolvedExecutable,
+  );
+  await launchAtStartup.enable();
+
   runApp(
     const MyApp(),
   );
@@ -18,6 +31,7 @@ void main() async {
     win.size = initialSize;
     win.alignment = Alignment.center;
     win.title = "ClicketyKlack";
+    win.hide();
   });
 }
 

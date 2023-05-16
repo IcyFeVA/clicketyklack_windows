@@ -1,4 +1,5 @@
 {
     "cmake.sourceDirectory": "${workspaceFolder}/build/windows/_deps/nuget-subbuild",
-    "cmake.configureOnOpen": false
+    "cmake.configureOnOpen": false,
+    "vue.features.codeActions.enable": false
 }

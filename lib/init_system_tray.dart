@@ -81,6 +81,7 @@ Future<void> initSystemTray(
         setEnabled(enabled?.checked);
       },
     ),
+    MenuSeparator(),
     MenuItemLabel(label: 'Exit', onClicked: (menuItem) => appWindow.close()),
   ]);
 
