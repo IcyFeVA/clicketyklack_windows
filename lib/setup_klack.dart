@@ -2,7 +2,7 @@ import 'dart:math';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:keyboard_event/keyboard_event.dart';
 
-late KeyboardEvent keyboardEvent = KeyboardEvent();
+KeyboardEvent keyboardEvent = KeyboardEvent();
 List<int> keysPressed = [];
 List<int> assignedKeySounds = [];
 int playersIndex = 0;

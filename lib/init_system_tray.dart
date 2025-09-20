@@ -11,11 +11,11 @@ String getImagePath(String imageName) {
 }
 
 Future<void> initSystemTray(
-    _soundPack, _setSoundPack, _enabled, _setEnabled) async {
-  final soundPack = _soundPack;
-  final setSoundPack = _setSoundPack;
-  final enabled = _enabled;
-  final setEnabled = _setEnabled;
+    soundPack, setSoundPack, enabled, setEnabled) async {
+  final soundPack = soundPack;
+  final setSoundPack = setSoundPack;
+  final enabled = enabled;
+  final setEnabled = setEnabled;
 
   String path =
       Platform.isWindows ? 'assets/app_icon.ico' : 'assets/app_icon.png';
