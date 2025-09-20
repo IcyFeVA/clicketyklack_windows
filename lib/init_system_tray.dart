@@ -11,11 +11,7 @@ String getImagePath(String imageName) {
 }
 
 Future<void> initSystemTray(
-    soundPack, setSoundPack, enabled, setEnabled) async {
-  final soundPack = soundPack;
-  final setSoundPack = setSoundPack;
-  final enabled = enabled;
-  final setEnabled = setEnabled;
+    soundPack, setSoundPack, enabled, setEnabled, volume, setVolume) async {
 
   String path =
       Platform.isWindows ? 'assets/app_icon.ico' : 'assets/app_icon.png';
@@ -80,6 +76,51 @@ Future<void> initSystemTray(
 
         setEnabled(enabled?.checked);
       },
+    ),
+    MenuSeparator(),
+    SubMenu(
+      label: "Volume",
+      image: getImagePath('volume_icon'),
+      children: [
+        MenuItemCheckbox(
+          label: 'Mute',
+          name: 'mute',
+          checked: volume == 0.0,
+          onClicked: (menuItem) async {
+            if (volume == 0.0) {
+              setVolume(1.0);
+              await menuItem.setCheck(false);
+            } else {
+              setVolume(0.0);
+              await menuItem.setCheck(true);
+            }
+          },
+        ),
+        MenuItemLabel(
+          label: '25%',
+          onClicked: (menuItem) {
+            setVolume(0.25);
+          },
+        ),
+        MenuItemLabel(
+          label: '50%',
+          onClicked: (menuItem) {
+            setVolume(0.5);
+          },
+        ),
+        MenuItemLabel(
+          label: '75%',
+          onClicked: (menuItem) {
+            setVolume(0.75);
+          },
+        ),
+        MenuItemLabel(
+          label: '100%',
+          onClicked: (menuItem) {
+            setVolume(1.0);
+          },
+        ),
+      ],
     ),
     MenuSeparator(),
     MenuItemLabel(label: 'Exit', onClicked: (menuItem) => appWindow.close()),

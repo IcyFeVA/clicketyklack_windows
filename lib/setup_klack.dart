@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:keyboard_event/keyboard_event.dart';
+import 'package:get_storage/get_storage.dart';
 
 KeyboardEvent keyboardEvent = KeyboardEvent();
 List<int> keysPressed = [];
@@ -33,7 +34,15 @@ List<AudioPlayer> players = [
   audioPlayer9
 ];
 
-void setupKlack(soundPack, enabled) {
+void updateVolume(double volume) {
+  for (var player in players) {
+    player.setVolume(volume);
+  }
+}
+
+void setupKlack(soundPack, enabled, [double volume = 1.0]) {
+  updateVolume(volume);
+  
   // Generate list: assign a sound file per key
   // Spacebar (scanCode 57) gets audio file 0
   int? index;

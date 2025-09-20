@@ -46,13 +46,14 @@ class _MyAppState extends State<MyApp> {
   final store = GetStorage();
   late String? _soundPack = store.read('soundPack');
   late bool? _enabled = store.read('enabled');
+  late double? _volume = store.read('volume');
 
   void _setSoundPack(String soundPack) {
     setState(() {
       _soundPack = soundPack;
     });
 
-    setupKlack(_soundPack, _enabled);
+    setupKlack(_soundPack, _enabled, _volume ?? 1.0);
 
     store.write('soundPack', _soundPack);
   }
@@ -62,19 +63,28 @@ class _MyAppState extends State<MyApp> {
       _enabled = enabled;
     });
 
-    setupKlack(_soundPack, _enabled);
+    setupKlack(_soundPack, _enabled, _volume ?? 1.0);
 
     store.write('enabled', _enabled);
+  }
+
+  void _setVolume(double volume) {
+    setState(() {
+      _volume = volume;
+    });
+
+    setupKlack(_soundPack, _enabled, _volume ?? 1.0);
+
+    store.write('volume', _volume);
   }
 
   @override
   void initState() {
     super.initState();
 
-    initSystemTray(
-        _soundPack ?? 'klack', _setSoundPack, _enabled ?? true, _setEnabled);
+    initSystemTray(_soundPack ?? 'klack', _setSoundPack, _enabled ?? true, _setEnabled, _volume ?? 1.0, _setVolume);
 
-    setupKlack(_soundPack ?? 'klack', _enabled ?? true);
+    setupKlack(_soundPack ?? 'klack', _enabled ?? true, _volume ?? 1.0);
   }
 
   @override
